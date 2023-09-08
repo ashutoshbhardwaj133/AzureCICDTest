@@ -1,0 +1,30 @@
+############### tekton pipeline ###############
+kubectl apply --filename https://storage.googleapis.com/tekton-releases/pipeline/latest/release.yaml
+
+kubectl get pods --namespace tekton-pipelines
+
+
+########### triggers #########
+kubectl apply --filename https://storage.googleapis.com/tekton-releases/triggers/latest/release.yaml
+kubectl apply --filename https://storage.googleapis.com/tekton-releases/triggers/latest/interceptors.yaml
+
+kubectl get pods --namespace tekton-pipelines --watch
+
+############ tekton dashboard ###########3
+
+kubectl apply --filename https://storage.googleapis.com/tekton-releases/dashboard/latest/release.yaml
+
+kubectl get pods --namespace tekton-pipelines --watch
+
+#### access dashboard 
+
+#### Using kubectl proxy
+kubectl proxy
+http://localhost:8001/api/v1/namespaces/tekton-pipelines/services/tekton-dashboard:http/proxy/
+
+###Using kubectl port-forward 
+
+kubectl --namespace tekton-pipelines port-forward svc/tekton-dashboard 9097:9097
+http://localhost:9097 
+
+
